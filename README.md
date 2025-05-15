@@ -47,7 +47,7 @@ The code has also been tested on Windows 10 with:
 - MATLAB R2022b or later
 - R 4.3.0 or later
 
-##Main functions
+##  Main functions
 
 - GuidedCoC.m: impletation of the GuidedCoC algorithm
 - match.m: performs optimal label matching to predict target cell types based on source clusters by our criterion
