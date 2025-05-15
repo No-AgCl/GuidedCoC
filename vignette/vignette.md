@@ -27,7 +27,7 @@ close all
 % cluster_p, cluster_q, cluster_q0: joint distributions for cells/features in Rˢ, data Rᵗ, and Aᵗ
 % obj: vector of objective values per iteration
 % match_result: optimal mapping between source and target clusters
-% matm: all mapping trials
+% matm: the list of matching results from all shuffling trials.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 load('data/processed_data/ex1_source_data_RNA.mat');
