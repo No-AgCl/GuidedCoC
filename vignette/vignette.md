@@ -12,7 +12,7 @@ close all
 
 %%%%%%%%%%%%%%%%%%%%% GuidedCoC algorithm %%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%% Input %%%%%%%%%%%%%%%
-% p, q and q0 represent data R⁽ˢ⁾, data R⁽ᵗ⁾, and data A⁽ᵗ⁾
+% p, q and q0_log represent data R⁽ˢ⁾, data R⁽ᵗ⁾, and data A⁽ᵗ⁾
 , respectively
 % nrowcluster: number of cell clusters in  data R⁽ᵗ⁾ and data A⁽ᵗ⁾
 % ncolcluster: number of feature clusters in data R⁽ˢ⁾, data R⁽ᵗ⁾, and data A⁽ᵗ⁾
