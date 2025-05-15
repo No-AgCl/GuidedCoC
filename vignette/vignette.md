@@ -96,31 +96,7 @@ heatmap_fun_rna(raw_data_y, scaleyellowred, colsep_ST, rowsep_Y)
 
 ![alt text](https://github.com/No-AgCl/GuidedCoC/blob/main/images/heatmap_ex1.png)
 
-## 3. One example for using baseline methods in the paper
 
-### MultiVI
-
-```python
-# TODO: Add MultiVI usage example
-```
-
-### Cobolt
-
-```python
-# TODO: Add Cobolt usage example
-```
-
-### scMoMaT
-
-```python
-# TODO: Add scMoMaT usage example
-```
-
-### Seurat v4
-
-```python
-# TODO: Add Seurat example
-```
 
 
 
