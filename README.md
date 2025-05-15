@@ -3,7 +3,7 @@
 ## Introduction
 GuidedCoC is an unsupervised framework for structure-guided transfer learning from unpaired scRNA-seq to paired scRNA-seq/scATAC-seq data, enabling joint clustering and cross-modal feature alignment.
 
-![image](https://github.com/No-AgCl/GuidedCoC/blob/main/overview/GuidedCoC.png)
+![image](https://github.com/No-AgCl/GuidedCoC/blob/main/images/GuidedCoC.png)
 
 ## Getting Started
 
