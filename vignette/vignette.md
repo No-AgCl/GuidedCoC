@@ -7,30 +7,31 @@ clear
 clc 
 close all
 
-%% Load the processed data in example 1 in the paper.
-% Note: The "data" folder includes all the preprocessed datasets (ex1–ex3) used in the paper.
+% Load the processed data in example 1 in the paper.
+% Note: The "data" folder includes the preprocessed datasets (ex1–ex3) used in the paper.
 
 %%%%%%%%%%%%%%%%%%%%% GuidedCoC algorithm %%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%% Input %%%%%%%%%%%%%%%
-% p, q and q0 represent data R<sup>(s)</sup>, data R<sup>(t)</sup>, and A<sup>(t)</sup>, respectively
-% nrowcluster: number of cell clusters in data R<sup>(t)</sup> and A<sup>(t)</sup>
-% ncolcluster: number of feature clusters in data R<sup>(s)</sup>, R<sup>(t)</sup>, and A<sup>(t)</sup>
+% p, q and q0 represent data R⁽ˢ⁾, data R⁽ᵗ⁾, and data A⁽ᵗ⁾
+, respectively
+% nrowcluster: number of cell clusters in  data R⁽ᵗ⁾ and data A⁽ᵗ⁾
+% ncolcluster: number of feature clusters in data R⁽ˢ⁾, data R⁽ᵗ⁾, and data A⁽ᵗ⁾
 % iter: number of iterations (default: 20)
-% beta: weight of source data R<sup>(s)</sup>
-% alpha: weight of unlinked features in A<sup>(t)</sup>
-% Cx_truth: known ground truth labels of data R<sup>(s)</sup>
+% beta: weight of source data R⁽ˢ⁾
+% alpha: weight of unlinked features in A⁽ᵗ⁾
+% Cx_truth: known ground truth labels of data R⁽ˢ⁾
 
 %%%%% Output %%%%%%%%%%%%%%%
 % Cy: predicted cell clusters for target data
 % Cz: feature clusters for both source and target data
-% cluster_p, cluster_q, cluster_q0: joint distributions for cells/features in R<sup>(s)</sup>, data R<sup>(t)</sup>, and A<sup>(t)</sup>
+% cluster_p, cluster_q, cluster_q0: joint distributions for cells/features in Rˢ, data Rᵗ, and Aᵗ
 % obj: vector of objective values per iteration
 % match_result: optimal mapping between source and target clusters
 % matm: all mapping trials
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 load('data/processed_data/ex1_source_data_RNA.mat');
-load('data/processed_data/target_data/ex1_target_data_RNA.mat');
+load('data/processed_data/ex1_target_data_RNA.mat');
 load('data/processed_data/ex1_target_data_ATAC.mat');
 load('data/processed_data/ex1_source_data_cell_label.mat'); 
 load('data/processed_data/ex1_target_data_cell_label.mat'); 
@@ -38,7 +39,7 @@ load('data/processed_data/ex1_target_data_cell_label.mat');
 % Hyperparameter settings
 nrowcluster = 8; 
 ncolcluster = 12; 
-iter = 10; 
+iter = 20; 
 beta = 1; 
 alpha = 0.8;
 ntrials = 25; 
@@ -72,10 +73,9 @@ library('R.matlab')
 
 scaleyellowred <- colorRampPalette(c("lightyellow", "red"), space = "rgb")(50)
 
-Y_link <- as.matrix(readMat("data/graph_data/q_log.mat")[[1]])
-U <- as.matrix(readMat("data/graph_data/q0.mat")[[1]])
-CY_best <- as.vector(readMat("data/graph_data/Cy.mat")[[1]])
-CZ_best <- as.vector(readMat("data/graph_data/Cz.mat")[[1]])
+Y_link <- as.matrix(readMat("data/graph_data/ex1_target_data_RNA.mat")[[1]])
+CY_best <- as.vector(readMat("data/graph_data/ex1_Cy.mat")[[1]])
+CZ_best <- as.vector(readMat("data/graph_data/ex1_Cz.mat")[[1]])
 
 CY_best <- reorder_label(CY_best, 1:8)
 CZ_best <- reorder_label(CZ_best, 1:12)
