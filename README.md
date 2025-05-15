@@ -71,7 +71,7 @@ Please check the <a href="vignette/vignette.md"><u>vignette</u></a> for a tutori
 
  
 
-##Acknoledgement
+## Acknoledgement
 
 We utilized and modified part of the code of CoupleCoC+ algorithm, therefore please refer to the CoupleCoC+ code at [https://github.com/cuhklinlab/coupleCoC_plus](https://github.com/cuhklinlab/coupleCoC_plus).
 
