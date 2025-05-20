@@ -163,16 +163,11 @@ clc
 close all
 
 % Load the processed data in example 4 in the paper.
-
-
-
-
 load('data/processed data/ex4_source_data_RNA.mat');
 load('data/processed data/ex4_target_data_RNA.mat');
 load('data/processed data/ex4_target_data_ATAC.mat');
 load('data/processed data/ex4_source_data_cell_label.mat'); 
 load('data/processed data/ex4_target_data_cell_label.mat'); 
-
 
 % Read the file and remove empty lines and duplicates
 valid_barcodes = readlines('data/processed data/ex4_labeled_cells_barcodes.txt');
