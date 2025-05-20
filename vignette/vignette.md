@@ -10,9 +10,9 @@ The data folder contains all datasets used in the four examples of the paper. It
 
 Each example (ex1–ex4) has its own set of files following consistent naming:
 
-- *_source_data_RNA.mat,  *_(labeled)_target_data_RNA.mat,  *_(labeled)_target_data_ATAC.mat: matrices used as input to the algorithm and used for plotting heatmaps.
+- *_source_data_RNA.mat, *_(labeled)_target_data_RNA.mat, *_(labeled)_target_data_ATAC.mat: matrices used as input to the algorithm and used for plotting heatmaps.
 
-- *_source_data_cell_label.mat,  *_target_data_cell_label.mat: ground truth labels.
+- *_source_data_cell_label.mat, *_target_data_cell_label.mat: ground truth labels.
 
 - *_Cx_truth.mat, *_Cy.mat, *_Cz.mat: clustering results for plotting.
 
