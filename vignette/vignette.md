@@ -1,6 +1,97 @@
 # A quick guide to GuidedCoC
 
-## 1. Implementation of GuidedCoC
+## 1. Data Preparatioon
+
+The data folder contains all datasets used in the four examples of the paper. It is organized into two subfolders:
+
+- data/processed data/: Contains the processed RNA and ATAC matrices, along with their corresponding cell labels. There are the input matrices (p, q, q0) to the GuidedCoC algorithm.
+
+- data/graph data/: Contains the clustering results and the matrices used for visualization (e.g. heatmaps). These include Cx_truth, Cy, Cz, and the p, q, q0 matrices used for plotting.
+
+Each example (ex1–ex4) has its own set of files following consistent naming:
+
+- *_source_data_RNA.mat,  *_(labeled)_target_data_RNA.mat,  *_(labeled)_target_data_ATAC.mat: matrices used as input to the algorithm and used for plotting heatmaps.
+
+- *_source_data_cell_label.mat,  *_target_data_cell_label.mat: ground truth labels.
+
+- *_Cx_truth.mat, *_Cy.mat, *_Cz.mat: clustering results for plotting.
+
+
+### Note on Example4 Data
+
+Due to GitHub’s file size limitations, three large matrices in data/graph data/ for Example 4 are not included in this repository. Specifically:
+
+data/graph data/ex4_source_data_RNA.mat (contains variable p)
+
+data/graph data/ex4_labeled_target_data_RNA.mat (contains variable q)
+
+data/graph data/ex4_labeled_target_data_ATAC.mat (contains variable q0)
+
+These matrices are **only used for visualization and evaluation**, not for running the GuidedCoC algorithm. You can regenerate them with the following steps.
+
+#### Step 1: Regenerate q and q0 for Graph Data
+You can either run the provided script **R/ex4_labeled_cells_selected.R**, or copy and run the following R code:
+
+```r
+library(R.matlab)
+library(data.table)
+
+
+base_dir <- "data/processed data"
+input_dir <- "data/processed data"
+output_dir <- "data/graph data"
+
+
+all_barcodes <- fread(file.path(base_dir, "ex4_target_data_barcodes.txt"), header = FALSE)[[1]]
+valid_barcodes <- fread(file.path(base_dir, "ex4_labeled_cells_barcodes.txt"), header = FALSE)[[1]]
+
+
+row_idx <- which(all_barcodes %in% valid_barcodes)
+cat("Extracting", length(row_idx), "rows for labeled cells\n")
+
+
+process_and_save <- function(mat_path, row_idx, var_name, out_filename) {
+  cat(" Processing:", mat_path, "\n")
+  
+
+  mat_list <- readMat(mat_path)
+  
+  if (!(var_name %in% names(mat_list))) {
+    stop(paste("Variable", var_name, "not found in", mat_path))
+  }
+  
+  mat <- mat_list[[var_name]]
+  
+
+  mat_labeled <- mat[row_idx, , drop = FALSE]
+  
+
+  out_path <- file.path(output_dir, out_filename)
+  
+
+  args <- list()
+  args[[var_name]] <- mat_labeled
+  do.call(writeMat, c(list(con = out_path), args))
+  
+  cat("Saved to:", out_path, "\n\n")
+}
+
+
+process_and_save(file.path(input_dir, "ex4_target_data_RNA.mat"), row_idx, var_name = "q", out_filename = "ex4_target_data_RNA.mat")
+process_and_save(file.path(input_dir, "ex4_target_data_ATAC.mat"), row_idx, var_name = "q0", out_filename = "ex4_target_data_ATAC.mat")
+
+
+```
+
+#### Step 2: Copy p from Processed Data
+
+```r
+file.copy("data/processed data/ex4_source_data_RNA.mat", 
+          "data/graph data/ex4_source_data_RNA.mat", overwrite = TRUE)
+
+```
+
+## 2. Implementation of GuidedCoC
 
 ```matlab
 clear 
@@ -8,7 +99,7 @@ clc
 close all
 
 % Load the processed data in example 1 in the paper.
-% Note: The "data" folder includes the preprocessed datasets (ex1–ex3) used in the paper.
+% Note: The "data" folder includes the preprocessed datasets (ex1–ex4) used in the paper.
 
 %%%%%%%%%%%%%%%%%%%%% GuidedCoC algorithm %%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%% Input %%%%%%%%%%%%%%%
@@ -63,7 +154,7 @@ cell_sums = sum(TAB_Y, 1);
 disp(match_result);
 ```
 
-## 2. Heatmaps of clustering results by GuidedCoC
+## 3. Heatmaps of clustering results by GuidedCoC
 
 ```r
 source("R/visualization.R") 
