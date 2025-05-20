@@ -1,4 +1,4 @@
-# A quick guide to GuidedCoC and baseline methods
+# A quick guide to GuidedCoC
 
 ## 1. Implementation of GuidedCoC
 
@@ -12,8 +12,7 @@ close all
 
 %%%%%%%%%%%%%%%%%%%%% GuidedCoC algorithm %%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%% Input %%%%%%%%%%%%%%%
-% p, q and q0 represent data R⁽ˢ⁾, data R⁽ᵗ⁾, and data A⁽ᵗ⁾
-, respectively
+% p, q and q0 represent data R⁽ˢ⁾, data R⁽ᵗ⁾, and data A⁽ᵗ⁾, respectively
 % nrowcluster: number of cell clusters in  data R⁽ᵗ⁾ and data A⁽ᵗ⁾
 % ncolcluster: number of feature clusters in data R⁽ˢ⁾, data R⁽ᵗ⁾, and data A⁽ᵗ⁾
 % iter: number of iterations (default: 20)
