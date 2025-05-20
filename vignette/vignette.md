@@ -170,16 +170,16 @@ close all
 load('data/processed data/ex4_source_data_RNA.mat');
 load('data/processed data/ex4_target_data_RNA.mat');
 load('data/processed data/ex4_target_data_ATAC.mat');
-load('data/processed data/ex_source_data_cell_label.mat'); 
+load('data/processed data/ex4_source_data_cell_label.mat'); 
 load('data/processed data/ex4_target_data_cell_label.mat'); 
 
 
 % Read the file and remove empty lines and duplicates
-valid_barcodes = readlines('data/valid_barcodes_ex4.txt');
+valid_barcodes = readlines('data/processed data/ex4_labeled_cells_barcodes.txt');
 valid_barcodes = valid_barcodes(valid_barcodes ~= "");  % Remove empty lines
 valid_barcodes = unique(valid_barcodes, 'stable');      % Remove duplicates while preserving order
 
-all_barcodes = readlines('data/target_data_barcodes_ex4_final.txt');
+all_barcodes = readlines('data/processed data/ex4_target_data_barcodes.txt');
 all_barcodes = all_barcodes(all_barcodes ~= "");        % Remove empty lines
 
 % Create logical index mapping
