@@ -77,8 +77,8 @@ process_and_save <- function(mat_path, row_idx, var_name, out_filename) {
 }
 
 
-process_and_save(file.path(input_dir, "ex4_target_data_RNA.mat"), row_idx, var_name = "q", out_filename = "ex4_target_data_RNA.mat")
-process_and_save(file.path(input_dir, "ex4_target_data_ATAC.mat"), row_idx, var_name = "q0", out_filename = "ex4_target_data_ATAC.mat")
+process_and_save(file.path(input_dir, "ex4_target_data_RNA.mat"), row_idx, var_name = "q", out_filename = "ex4_labeled_target_data_RNA.mat")
+process_and_save(file.path(input_dir, "ex4_target_data_ATAC.mat"), row_idx, var_name = "q0", out_filename = "ex4_labeled_target_data_ATAC.mat")
 
 
 ```
@@ -120,11 +120,11 @@ close all
 % matm: the list of matching results from all shuffling trials.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-load('data/processed_data/ex1_source_data_RNA.mat');
-load('data/processed_data/ex1_target_data_RNA.mat');
-load('data/processed_data/ex1_target_data_ATAC.mat');
-load('data/processed_data/ex1_source_data_cell_label.mat'); 
-load('data/processed_data/ex1_target_data_cell_label.mat'); 
+load('data/processed data/ex1_source_data_RNA.mat');
+load('data/processed data/ex1_target_data_RNA.mat');
+load('data/processed data/ex1_target_data_ATAC.mat');
+load('data/processed data/ex1_source_data_cell_label.mat'); 
+load('data/processed data/ex1_target_data_cell_label.mat'); 
  
 % Hyperparameter settings
 nrowcluster = 8; 
@@ -149,10 +149,87 @@ q0_eps = q0 + epsilon;
     GuidedCoC(p_eps, q_eps, q0_eps, Cx_truth, nrowcluster, ncolcluster, iter, beta, alpha, ntrials, jsd_threshold, n_shuffles, numCols);
 
 % Evaluation
-[TAB_Y, Eval_tab2] = Eval(Cy_truth, Cy); % Generates contingency table and metrics (ARI, NMI)
+[TAB_Y, Eval_tab] = Eval(Cy_truth, Cy); % Generates contingency table and metrics (ARI, NMI)
 cell_sums = sum(TAB_Y, 1);
 disp(match_result);
 ```
+The above instruction also applies to Examples 2 and 3. For Example 4, note that when computing clustering metrics, **only the cells with ground truth labels** should be considered.
+The following code shows how to run the algorithm on the Example 4 data:
+
+
+```matlab
+clear 
+clc 
+close all
+
+% Load the processed data in example 4 in the paper.
+
+
+
+
+load('data/processed data/ex4_source_data_RNA.mat');
+load('data/processed data/ex4_target_data_RNA.mat');
+load('data/processed data/ex4_target_data_ATAC.mat');
+load('data/processed data/ex_source_data_cell_label.mat'); 
+load('data/processed data/ex4_target_data_cell_label.mat'); 
+
+
+% Read the file and remove empty lines and duplicates
+valid_barcodes = readlines('data/valid_barcodes_ex4.txt');
+valid_barcodes = valid_barcodes(valid_barcodes ~= "");  % Remove empty lines
+valid_barcodes = unique(valid_barcodes, 'stable');      % Remove duplicates while preserving order
+
+all_barcodes = readlines('data/target_data_barcodes_ex4_final.txt');
+all_barcodes = all_barcodes(all_barcodes ~= "");        % Remove empty lines
+
+% Create logical index mapping
+[~, valid_idx] = ismember(valid_barcodes, all_barcodes);
+disp('First 10 valid barcodes:');
+disp(all_barcodes(valid_idx(1:10)));
+
+% Check for invalid indices
+invalid_indices = valid_idx == 0;
+if any(invalid_indices)
+    warning("Found %d invalid barcodes!", sum(invalid_indices));
+    valid_idx = valid_idx(~invalid_indices);        % Remove invalid indices
+    valid_barcodes = valid_barcodes(~invalid_indices);
+end
+
+
+% Hyperparameter settings
+nrowcluster = 8; 
+ncolcluster = 12; 
+iter = 20; 
+beta = 1; 
+alpha = 0.8;
+ntrials = 25; 
+jsd_threshold = 0.45;
+n_shuffles = 25;
+numCols = size(p,2);
+
+addpath('Matlab'); % The Matlab folder contains function files for GuidedCoC
+
+epsilon = 1e-6;
+p_eps  = p  + epsilon;  
+q_eps  = q  + epsilon;  
+q0_eps = q0 + epsilon; 
+
+% Run the GuidedCoC algorithm
+[Cx_truth_new, Cy, Cz, cluster_p, cluster_q, cluster_q0, matm, match_result, obj] = ...
+    GuidedCoC(p_eps, q_eps, q0_eps, Cx_truth, nrowcluster, ncolcluster, iter, beta, alpha, ntrials, jsd_threshold, n_shuffles, numCols);
+
+% Evaluation
+if max(valid_idx) > size(Cy, 1)
+    error("Valid indices exceed the number of rows in the Cy matrix! Please check whether all_barcodes is aligned with the row order of Cy.");
+end
+
+Cy_eval = Cy(valid_idx, :);
+
+[TAB_Y, Eval_tab] = Eval(Cy_truth, Cy_eval); % Generates contingency table and metrics (ARI, NMI)
+cell_sums = sum(TAB_Y, 1);
+disp(match_result);
+```
+
 
 ## 3. Heatmaps of clustering results by GuidedCoC
 
@@ -163,9 +240,9 @@ library('R.matlab')
 
 scaleyellowred <- colorRampPalette(c("lightyellow", "red"), space = "rgb")(50)
 
-Y_link <- as.matrix(readMat("data/graph_data/ex1_target_data_RNA.mat")[[1]])
-CY_best <- as.vector(readMat("data/graph_data/ex1_Cy.mat")[[1]])
-CZ_best <- as.vector(readMat("data/graph_data/ex1_Cz.mat")[[1]])
+Y_link <- as.matrix(readMat("data/graph data/ex1_target_data_RNA.mat")[[1]])
+CY_best <- as.vector(readMat("data/graph data/ex1_Cy.mat")[[1]])
+CZ_best <- as.vector(readMat("data/graph data/ex1_Cz.mat")[[1]])
 
 CY_best <- reorder_label(CY_best, 1:8)
 CZ_best <- reorder_label(CZ_best, 1:12)
