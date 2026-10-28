@@ -61,9 +61,9 @@ We evaluated GuidedCoC on four real-world single-cell datasets, each consisting 
 | Example | Source Data (scRNA-seq) | Target Data (paired RNA+ATAC) | Type | Link |
 |---------|--------------------------|--------------------------------|------|------|
 | **Ex1** | 5k PBMCs from 10x Genomics (Donor 1, RNA only) | 10x Genomics PBMC multiome (3k, RNA+ATAC) | Human PBMC | [Link](https://www.10xgenomics.com/datasets/5k_Human_Donor1_PBMC_3p_gem-x) / [Link](https://www.10xgenomics.com/datasets/pbmc-from-a-healthy-donor-no-cell-sorting-3-k-1-standard-1-0-0) |
-| **Ex2** | E18 Mouse Brain scRNA-seq (10x) | E18 Mouse Brain Multiome (RNA+ATAC) | Mouse brain | [Link](https://www.10xgenomics.com/datasets/5k_Human_Donor1_PBMC_3p_gem-x) / [Link](https://www.10xgenomics.com/datasets/fresh-embryonic-e-18-mouse-brain-5-k-1-standard-1-0-0) |
-| **Ex3** | Mouse Lymph Node scRNA-seq (Tabula Muris) | Human Lymph Node Multiome (RNA+ATAC, 10x) | Cross-species | [Link](https://www.10xgenomics.com/datasets/Mixture-of-cells-from-mouse-lymph-nodes-and-spleen-stained-with-totalseqc-mouse-universal-cocktail) / [Link](https://www.10xgenomics.com/datasets/fresh-frozen-lymph-node-with-b-cell-lymphoma-14-k-sorted-nuclei-1-standard-1-0-0) |
-| **Ex4** | Human Pancreatic Islet scRNA-seq (HPAP) | Human Islet Multiome (RNA+ATAC, 10x) | Human pancreas | [Link](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE84133) / [Link]( https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE200044) |
+| **Ex2** | E18 Mouse Brain scRNA-seq (10x) | E18 Mouse Brain Multiome (RNA+ATAC) | Mouse brain | [Link](https://www.10xgenomics.com/datasets/10-k-brain-cells-from-an-e-18-mouse-v-3-chemistry-3-standard-3-0-0) / [Link](https://www.10xgenomics.com/datasets/fresh-embryonic-e-18-mouse-brain-5-k-1-standard-1-0-0) |
+| **Ex3** | Mouse Lymph Node + Spleen scRNA-seq (10x, 4-plex TotalSeq-C) | Human Lymph Node Multiome (RNA+ATAC, 10x) | Cross-species | [Link](https://www.10xgenomics.com/datasets/Mixture-of-cells-from-mouse-lymph-nodes-and-spleen-stained-with-totalseqc-mouse-universal-cocktail) / [Link](https://www.10xgenomics.com/datasets/fresh-frozen-lymph-node-with-b-cell-lymphoma-14-k-sorted-nuclei-1-standard-1-0-0) |
+| **Ex4** | Human Pancreatic Islet scRNA-seq (HPAP) | Human Islet Multiome (RNA+ATAC, 10x) | Human pancreas | [Link](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE84133) / [Link](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE200044) |
 
 
 
